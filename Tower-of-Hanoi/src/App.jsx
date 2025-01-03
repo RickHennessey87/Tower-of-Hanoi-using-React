@@ -1,34 +1,43 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Peg } from './components/Peg/Peg';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pegs, setPegs] = useState([
+    [3, 2, 1],
+    [],
+    [],
+  ]);
+
+  const moveDisk = (fromPeg, toPeg, diskSize) => {
+    setPegs((prev) => {
+      const newPegs = [...prev].map((peg) => [...peg]);
+      newPegs[fromPeg].pop();
+      newPegs[toPeg].push(diskSize);
+      return newPegs;
+    });
+  };
+
+  const containerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '30px',
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ textAlign: 'center' }}>
+      <h1>React DnD Tower of Hanoi</h1>
+      <div style={containerStyle}>
+        {pegs.map((pegDisks, pegIndex) => (
+          <Peg
+            key={pegIndex}
+            pegIndex={pegIndex}
+            disks={pegDisks}
+            moveDisk={moveDisk}
+          />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
