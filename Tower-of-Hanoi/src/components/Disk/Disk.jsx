@@ -2,14 +2,17 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 
 export const Disk = ({ size, pegIndex, topDisk, children }) => {
-    const [{ isDragging }, drag] = useDrag(() => ({
-        type: 'DISK',
-        canDrag: topDisk,
-        item: { size, fromPeg: pegIndex },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
+    const [{ isDragging }, drag] = useDrag(
+        () => ({
+            type: 'DISK',
+            canDrag: topDisk,
+            item: { size, fromPeg: pegIndex },
+            collect: (monitor) => ({
+                isDragging: monitor.isDragging(),
+            }),
         }),
-    }));
+        [topDisk, size, pegIndex]
+    );
 
     console.log(`Disk ${size}, Peg ${pegIndex}, topDisk: ${topDisk}, canDrag: ${topDisk}`);
 
