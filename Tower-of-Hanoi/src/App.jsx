@@ -9,6 +9,8 @@ function App() {
     [],
   ]);
 
+  const [dummy, setDummy] = useState(false);
+
   const moveDisk = (fromPeg, toPeg, diskSize) => {
     setPegs((prev) => {
       const newPegs = [...prev].map((peg) => [...peg]);
@@ -16,6 +18,7 @@ function App() {
       newPegs[toPeg].push(diskSize);
       return newPegs;
     });
+    setDummy((prev) => !prev);
   };
 
   const containerStyle = {
@@ -34,6 +37,7 @@ function App() {
             pegIndex={pegIndex}
             disks={pegDisks}
             moveDisk={moveDisk}
+            dummy={dummy}
           />
         ))}
       </div>

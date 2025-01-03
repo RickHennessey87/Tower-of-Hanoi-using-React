@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { Disk } from '../Disk/Disk';
 
-export const Peg = ({ pegIndex, disks, moveDisk }) => {
+export const Peg = ({ pegIndex, disks, moveDisk, dummy }) => {
     const topDiskOnPeg = disks[disks.length - 1] || Infinity;
 
     const [{ isOver, canDrop }, drop] = useDrop(() => ({
@@ -16,7 +16,7 @@ export const Peg = ({ pegIndex, disks, moveDisk }) => {
         collect: (monitor) => ({
             isOver: monitor.isOver(),
             canDrop: monitor.canDrop(),
-        }),
+        })
     }));
 
     const style = {
@@ -31,13 +31,17 @@ export const Peg = ({ pegIndex, disks, moveDisk }) => {
         alignItems: 'center',
     };
 
+    console.log(`Peg ${pegIndex} disks: `, disks);
+
+
     return (
         <div ref={drop} style={style}>
             {disks.map((disk, idx) => {
                 const isTopDisk = idx === disks.length - 1;
+                console.log(`Peg ${pegIndex}, Disk ${disk}, isTopDisk: ${isTopDisk}`);
                 return (
                     <Disk
-                        key={disk}
+                        key={`${pegIndex}-${disk}-${dummy}`}
                         size={disk}
                         pegIndex={pegIndex}
                         topDisk={isTopDisk}

@@ -11,6 +11,8 @@ export const Disk = ({ size, pegIndex, topDisk, children }) => {
         }),
     }));
 
+    console.log(`Disk ${size}, Peg ${pegIndex}, topDisk: ${topDisk}, canDrag: ${topDisk}`);
+
     const style = {
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: `rgba(0, 100, 200, 0.7)`,
